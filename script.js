@@ -105,7 +105,7 @@ function renderSource(key) {
 
 function renderPreview(key) {
   const content = preview[files[key].title] || preview.readme;
-  return content;
+  return content.replaceAll('Varashree AI', 'Varaura AI').replace('href="#resume" data-resume', 'href="resume.pdf" download="Varashree-HA-Resume.pdf" data-resume');
 }
 
 function bindEditor() {
@@ -145,13 +145,13 @@ function startTyping(el) {
   tick();
 }
 
-function toggleExplorer(force) { const explorer = $('#explorer'); const closed = typeof force === 'boolean' ? !force : explorer.classList.contains('closed'); explorer.classList.toggle('closed', closed); }
+function toggleExplorer(force) { const explorer = $('#explorer'); const shouldOpen = typeof force === 'boolean' ? force : explorer.classList.contains('closed'); explorer.classList.toggle('closed', !shouldOpen); $('#explorerScrim').classList.toggle('hidden', !shouldOpen || window.innerWidth > 900); }
 function closeExplorerMobile() { if (window.innerWidth <= 900) toggleExplorer(false); }
 function toggleTerminal(force) { const panel = $('#terminalPanel'); const open = typeof force === 'boolean' ? force : panel.classList.contains('hidden'); panel.classList.toggle('hidden', !open); if (open) setTimeout(() => $('#terminalInput').focus(), 50); }
 function openAssistant() { $('#assistantPanel').classList.add('open'); $('#assistantPanel').setAttribute('aria-hidden', 'false'); setTimeout(() => $('#assistantInput').focus(), 50); }
 function closeAssistant() { $('#assistantPanel').classList.remove('open'); $('#assistantPanel').setAttribute('aria-hidden', 'true'); }
 function showToast(message) { const toast = $('#toast'); toast.textContent = message; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2200); }
-function openResume() { showToast('Resume print view opened. Choose Save as PDF.'); const resume = window.open('', '_blank', 'noopener'); if (!resume) { window.print(); return; } resume.document.write('<title>Varashree H A - Resume</title><style>body{font-family:Arial;max-width:760px;margin:48px auto;line-height:1.6;color:#17202a}h1{margin-bottom:0}h2{border-bottom:1px solid #ccd4dc;padding-bottom:5px}small{color:#586574}</style><h1>Varashree H A</h1><small>AI Engineer | Research Enthusiast | Full Stack Developer</small><p>Bangalore, India | varashree710@gmail.com | github.com/Varashree01 | linkedin.com/in/varashree01</p><h2>Education</h2><p>Alliance University - B.Tech Computer Science - Expected 2028 - CGPA 9.5/10</p><h2>Experience</h2><p>AI Engineering Intern - Nov 2025 to Jan 2026</p><p>Built a collaborative multi-agent AI framework using LangChain, supervisor-worker orchestration, external API integrations, Flask, and React.</p><h2>Projects</h2><p>Multi-Agent AI Orchestration Framework; MedTwin AI; Product Store</p><h2>Skills</h2><p>Python, C++, JavaScript, React, Flask, Node.js, MongoDB, LangChain, LangGraph, OpenAI APIs, HuggingFace, RAG</p>'); resume.document.close(); }
+function openResume() { const link = document.createElement('a'); link.href = 'resume.pdf'; link.download = 'Varashree-HA-Resume.pdf'; document.body.appendChild(link); link.click(); link.remove(); showToast('Downloading resume.pdf'); }
 
 const commands = ['help', 'whoami', 'about', 'projects', 'skills', 'experience', 'research', 'contact', 'resume', 'clear', 'open'];
 const responses = {
@@ -175,7 +175,7 @@ const workspaceCommands = [
   { label: 'Quick Open', shortcut: 'Ctrl P', action: () => openPalette('quick') },
   { label: 'Toggle Explorer', shortcut: 'Ctrl B', action: () => toggleExplorer() },
   { label: 'Toggle Terminal', shortcut: 'Ctrl J', action: () => toggleTerminal() },
-  { label: 'Open Varashree AI', shortcut: 'Ctrl Shift C', action: openAssistant },
+  { label: 'Open Varaura AI', shortcut: 'Ctrl Shift C', action: openAssistant },
   { label: 'Open Resume', shortcut: '', action: openResume },
   { label: 'Open Contact', shortcut: '', action: () => openFile('contact.ts') },
   { label: 'Open Selected Project', shortcut: '', action: () => openFile('projects/agent-framework.md') }
@@ -192,7 +192,7 @@ const menus = {
   view: [{ label: 'Toggle Explorer', shortcut: 'Ctrl B', action: () => toggleExplorer() }, { label: 'Toggle Terminal', shortcut: 'Ctrl J', action: () => toggleTerminal() }],
   run: [{ label: 'Open selected project', shortcut: '', action: () => openFile('projects/agent-framework.md') }],
   terminal: [{ label: 'New terminal session', shortcut: '', action: terminalSetup }, { label: 'Clear terminal', shortcut: '', action: () => { $('#panelBody').innerHTML = ''; } }],
-  help: [{ label: 'Ask Varashree AI', shortcut: 'Ctrl Shift C', action: openAssistant }, { label: 'Open contact', shortcut: '', action: () => openFile('contact.ts') }]
+  help: [{ label: 'Ask Varaura AI', shortcut: 'Ctrl Shift C', action: openAssistant }, { label: 'Open contact', shortcut: '', action: () => openFile('contact.ts') }]
 };
 function closeMenu() { $('#menuPopover').classList.add('hidden'); document.querySelectorAll('[data-menu]').forEach((button) => button.setAttribute('aria-expanded', 'false')); }
 function openMenu(button) { const items = menus[button.dataset.menu]; const popover = $('#menuPopover'); const rect = button.getBoundingClientRect(); popover.innerHTML = items.map((item, index) => `<button class="menu-item" role="menuitem" data-menu-item="${index}"><span>${item.label}</span><kbd>${item.shortcut}</kbd></button>`).join(''); popover.style.left = `${rect.left}px`; popover.style.top = `${rect.bottom + 4}px`; popover.classList.remove('hidden'); document.querySelectorAll('[data-menu]').forEach((other) => other.setAttribute('aria-expanded', String(other === button))); popover.querySelectorAll('[data-menu-item]').forEach((item) => item.addEventListener('click', () => { items[Number(item.dataset.menuItem)].action(); closeMenu(); })); }
@@ -200,6 +200,7 @@ document.querySelectorAll('[data-menu]').forEach((el) => el.addEventListener('cl
 document.addEventListener('click', (event) => { if (!event.target.closest('[data-menu]') && !event.target.closest('#menuPopover')) closeMenu(); });
 document.querySelectorAll('[data-activity]').forEach((el) => el.addEventListener('click', () => { const action = el.dataset.activity; if (action === 'explorer') toggleExplorer(); if (action === 'search') openPalette(); if (action === 'assistant') openAssistant(); if (action === 'contact') openFile('contact.ts'); document.querySelectorAll('.activity-icon').forEach((item) => item.classList.toggle('active', item === el)); }));
 $('#mobileExplorer').addEventListener('click', () => toggleExplorer()); $('#closeExplorer').addEventListener('click', () => toggleExplorer(false)); $('#quickOpenButton').addEventListener('click', () => openPalette()); $('#assistantButton').addEventListener('click', openAssistant); $('#closeAssistant').addEventListener('click', closeAssistant); $('#closeTerminal').addEventListener('click', () => toggleTerminal(false));
+$('#explorerScrim').addEventListener('click', () => toggleExplorer(false));
 document.querySelectorAll('[data-panel-action]').forEach((el) => el.addEventListener('click', () => { const panel = $('#terminalPanel'); if (el.dataset.panelAction === 'minimize') panel.classList.toggle('minimized'); if (el.dataset.panelAction === 'expand') panel.classList.toggle('expanded'); }));
 document.querySelectorAll('[data-panel]').forEach((el) => el.addEventListener('click', () => { document.querySelectorAll('[data-panel]').forEach((tab) => tab.classList.toggle('active', tab === el)); if (el.dataset.panel === 'output') $('#panelBody').innerHTML = '<div class="terminal-output"><span class="good">[build] Workspace ready. 0 errors, 0 warnings.</span></div>'; else if (el.dataset.panel === 'problems') $('#panelBody').innerHTML = '<div class="terminal-output"><span class="good">No problems have been detected.</span></div>'; else terminalSetup(); }));
 $('#paletteInput').addEventListener('input', () => { paletteIndex = 0; renderPalette(); }); $('#paletteInput').addEventListener('keydown', (event) => { const items = paletteItems(); if (event.key === 'ArrowDown') { paletteIndex = Math.min(paletteIndex + 1, items.length - 1); renderPalette(); event.preventDefault(); } if (event.key === 'ArrowUp') { paletteIndex = Math.max(0, paletteIndex - 1); renderPalette(); event.preventDefault(); } if (event.key === 'Enter') selectPaletteItem(items[paletteIndex]); if (event.key === 'Escape') closePalette(); }); $('#paletteOverlay').addEventListener('click', (event) => { if (event.target.id === 'paletteOverlay') closePalette(); });

@@ -20,14 +20,14 @@
         <button data-menu="file" aria-haspopup="true" aria-expanded="false">File</button><button data-menu="edit" aria-haspopup="true" aria-expanded="false">Edit</button><button data-menu="view" aria-haspopup="true" aria-expanded="false">View</button><button data-menu="run" aria-haspopup="true" aria-expanded="false">Run</button><button data-menu="terminal" aria-haspopup="true" aria-expanded="false">Terminal</button><button data-menu="help" aria-haspopup="true" aria-expanded="false">Help</button>
       </nav>
       <button class="workspace-title" id="quickOpenButton" aria-label="Open Quick Open"><span class="live-dot"></span><span>varashree-ha / portfolio</span><kbd>Ctrl P</kbd></button>
-      <button class="assistant-trigger icon-button" id="assistantButton" aria-label="Open Varashree AI assistant" title="Varashree AI (Ctrl Shift C)">&#10024;</button>
+      <button class="assistant-trigger icon-button" id="assistantButton" aria-label="Open Varaura AI assistant" title="Varaura AI (Ctrl Shift C)">&#129302;</button>
     </header>
 
     <div class="app-body">
       <aside class="activity-bar" aria-label="Activity bar">
         <button class="activity-icon active" data-activity="explorer" aria-label="Explorer" title="Explorer"><span>&#128193;</span></button>
         <button class="activity-icon" data-activity="search" aria-label="Search" title="Search (Ctrl P)"><span>&#8981;</span></button>
-        <button class="activity-icon" data-activity="assistant" aria-label="Varashree AI" title="Varashree AI (Ctrl Shift C)"><span>&#10024;</span></button>
+        <button class="activity-icon" data-activity="assistant" aria-label="Varaura AI" title="Varaura AI (Ctrl Shift C)"><span>&#129302;</span></button>
         <span class="activity-spacer"></span>
         <button class="activity-icon" data-activity="contact" aria-label="Open contact" title="Open contact"><span>&#9993;</span></button>
       </aside>
@@ -37,6 +37,7 @@
         <div class="workspace-label"><span class="chevron down">&#8250;</span><span>VARASHREE-HA</span></div>
         <div class="tree" id="tree"></div>
       </aside>
+      <button class="explorer-scrim hidden" id="explorerScrim" aria-label="Close explorer"></button>
 
       <main class="main-area">
         <div class="tab-strip" id="tabs" role="tablist" aria-label="Open files"></div>
@@ -70,10 +71,10 @@
     </section>
   </div>
 
-  <aside class="assistant-panel" id="assistantPanel" aria-label="Varashree AI assistant" aria-hidden="true">
-    <div class="assistant-header"><div><strong>Varashree AI</strong><span>portfolio context only</span></div><button class="icon-button" id="closeAssistant" aria-label="Close assistant">&#215;</button></div>
+  <aside class="assistant-panel" id="assistantPanel" aria-label="Varaura AI assistant" aria-hidden="true">
+    <div class="assistant-header"><div class="assistant-identity"><span class="bot-icon" aria-hidden="true">&#129302;</span><div><strong>Varaura AI</strong><span>portfolio context only</span></div></div><button class="icon-button" id="closeAssistant" aria-label="Close assistant">&#215;</button></div>
     <div class="assistant-messages" id="assistantMessages"><div class="assistant-message bot">Ask me about Varashree's projects, skills, research, experience, education, or contact details.</div></div>
-    <form class="assistant-form" id="assistantForm"><input id="assistantInput" aria-label="Ask Varashree AI" placeholder="Ask about the portfolio..." autocomplete="off"><button class="send-button" aria-label="Send question">&#8593;</button></form>
+    <form class="assistant-form" id="assistantForm"><input id="assistantInput" aria-label="Ask Varaura AI" placeholder="Ask about the portfolio..." autocomplete="off"><button class="send-button" aria-label="Send question">&#8593;</button></form>
   </aside>
 
   <div class="toast" id="toast" role="status"></div>
