@@ -1,88 +1,82 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Varashree H A — AI Engineer, Research Enthusiast and Full Stack Developer." />
-  <title>Varashree H A — Workspace</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Varashree H A — AI Engineer, Research Enthusiast and Full Stack Developer.">
+  <title>Varashree H A | Workspace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="stars" aria-hidden="true"></div>
-  <div class="window">
-    <header class="topbar">
-      <div class="traffic">
-        <span class="dot red"></span>
-        <span class="dot amber"></span>
-        <span class="dot green"></span>
-      </div>
-      <div class="menu">
-        <span>File</span>
-        <span>Edit</span>
-        <span>View</span>
-        <span>Run</span>
-        <span>Terminal</span>
-      </div>
-      <button class="search" id="searchBtn" aria-label="Open command palette">
-        <span>varashree-ha / portfolio</span>
-        <kbd>Ctrl K</kbd>
-      </button>
+  <div class="atmosphere" aria-hidden="true"></div>
+  <div class="app-shell" id="appShell">
+    <header class="titlebar">
+      <div class="traffic" aria-hidden="true"><span class="traffic-dot red"></span><span class="traffic-dot amber"></span><span class="traffic-dot green"></span></div>
+      <button class="mobile-menu icon-button" id="mobileExplorer" aria-label="Open explorer" title="Open explorer">&#9776;</button>
+      <nav class="menu-bar" aria-label="Application menu">
+        <button data-menu="file" aria-haspopup="true" aria-expanded="false">File</button><button data-menu="edit" aria-haspopup="true" aria-expanded="false">Edit</button><button data-menu="view" aria-haspopup="true" aria-expanded="false">View</button><button data-menu="run" aria-haspopup="true" aria-expanded="false">Run</button><button data-menu="terminal" aria-haspopup="true" aria-expanded="false">Terminal</button><button data-menu="help" aria-haspopup="true" aria-expanded="false">Help</button>
+      </nav>
+      <button class="workspace-title" id="quickOpenButton" aria-label="Open Quick Open"><span class="live-dot"></span><span>varashree-ha / portfolio</span><kbd>Ctrl P</kbd></button>
+      <button class="assistant-trigger icon-button" id="assistantButton" aria-label="Open Varashree AI assistant" title="Varashree AI (Ctrl Shift C)">&#10024;</button>
     </header>
 
-    <div class="workspace">
-      <aside class="sidebar" id="sidebar">
-        <div class="side-title">Explorer</div>
-        <ul id="tree"></ul>
+    <div class="app-body">
+      <aside class="activity-bar" aria-label="Activity bar">
+        <button class="activity-icon active" data-activity="explorer" aria-label="Explorer" title="Explorer"><span>&#128193;</span></button>
+        <button class="activity-icon" data-activity="search" aria-label="Search" title="Search (Ctrl P)"><span>&#8981;</span></button>
+        <button class="activity-icon" data-activity="assistant" aria-label="Varashree AI" title="Varashree AI (Ctrl Shift C)"><span>&#10024;</span></button>
+        <span class="activity-spacer"></span>
+        <button class="activity-icon" data-activity="contact" aria-label="Open contact" title="Open contact"><span>&#9993;</span></button>
       </aside>
 
-      <main class="main">
-        <div class="tabs" id="tabs"></div>
-        <div class="crumbs" id="crumbs"></div>
-        <article id="editor" class="editor"></article>
+      <aside class="explorer" id="explorer" aria-label="Explorer">
+        <div class="explorer-heading"><span>Explorer</span><button class="icon-button" id="closeExplorer" aria-label="Close explorer">&#215;</button></div>
+        <div class="workspace-label"><span class="chevron down">&#8250;</span><span>VARASHREE-HA</span></div>
+        <div class="tree" id="tree"></div>
+      </aside>
+
+      <main class="main-area">
+        <div class="tab-strip" id="tabs" role="tablist" aria-label="Open files"></div>
+        <div class="breadcrumb" id="breadcrumbs" aria-label="Breadcrumb"></div>
+        <section class="editor" id="editor" aria-live="polite"></section>
+        <section class="terminal-panel" id="terminalPanel" aria-label="Terminal">
+          <div class="panel-header">
+            <div class="panel-tabs"><button class="panel-tab active" data-panel="terminal">TERMINAL</button><button class="panel-tab" data-panel="output">OUTPUT</button><button class="panel-tab" data-panel="problems">PROBLEMS <span class="problem-count">0</span></button></div>
+            <div class="panel-actions"><button class="icon-button" data-panel-action="minimize" aria-label="Minimize terminal" title="Minimize">&#8211;</button><button class="icon-button" data-panel-action="expand" aria-label="Expand terminal" title="Expand">&#8597;</button><button class="icon-button" id="closeTerminal" aria-label="Close terminal" title="Close">&#215;</button></div>
+          </div>
+          <div class="panel-body" id="panelBody"></div>
+          <form class="terminal-input-row" id="terminalForm"><span class="terminal-prompt">varashree@portfolio:~$</span><input id="terminalInput" aria-label="Terminal command" autocomplete="off" spellcheck="false" placeholder="help"></form>
+        </section>
       </main>
     </div>
 
-    <div class="panel" id="panel">
-      <div class="panel-head">
-        <button class="panel-tab active" data-panel="terminal">Terminal</button>
-        <button class="panel-tab" data-panel="output">Output</button>
-        <button class="panel-action" data-panel-action="minimize" aria-label="Minimize terminal">—</button>
-        <button class="panel-action" data-panel-action="compact" aria-label="Shrink terminal">▢</button>
-        <button class="panel-action" data-panel-action="expand" aria-label="Expand terminal">⤢</button>
-        <button class="panel-close" id="closePanel" aria-label="Close terminal">×</button>
-      </div>
-      <div class="terminal" id="terminal"></div>
-      <div class="terminal-input-wrap">
-        <span class="prompt">varashree@portfolio:~$</span>
-        <input id="terminalInput" type="text" autocomplete="off" spellcheck="false" aria-label="Terminal command input" />
-      </div>
-    </div>
-
     <footer class="statusbar">
-      <div class="status-left">
-        <span>main</span>
-        <span id="statusFile">home.tsx</span>
-      </div>
-      <div class="status-right">
-        <span id="statusLang">TypeScript React</span>
-        <span id="statusClock">--:--</span>
-      </div>
+      <div class="status-group"><span class="branch">&#9733; main</span><span id="statusFile">home.tsx</span><span class="status-muted">0 problems</span></div>
+      <div class="status-group"><span id="statusLang">TypeScript React</span><span>UTF-8</span><span>Bengaluru, IN</span><span id="statusClock">--:--:--</span></div>
     </footer>
   </div>
 
-  <div class="palette hidden" id="palette">
-    <div class="palette-panel">
-      <div class="palette-search">
-        <span>⌕</span>
-        <input id="paletteInput" type="text" placeholder="Search files or commands" autocomplete="off" spellcheck="false" />
-      </div>
-      <div id="paletteList"></div>
-    </div>
+  <div class="menu-popover hidden" id="menuPopover" role="menu" aria-label="Workspace menu"></div>
+
+  <div class="overlay hidden" id="paletteOverlay">
+    <section class="palette" role="dialog" aria-modal="true" aria-label="Quick Open">
+      <div class="palette-heading"><span id="paletteTitle">Quick Open</span><kbd>ESC</kbd></div>
+      <div class="palette-input"><span>&#8981;</span><input id="paletteInput" autocomplete="off" spellcheck="false" placeholder="Search files..." aria-label="Search files and commands"></div>
+      <div class="palette-list" id="paletteList"></div>
+      <div class="palette-footer"><span>&#8593; &#8595; navigate</span><span>Enter open</span><span>Esc close</span></div>
+    </section>
   </div>
 
+  <aside class="assistant-panel" id="assistantPanel" aria-label="Varashree AI assistant" aria-hidden="true">
+    <div class="assistant-header"><div><strong>Varashree AI</strong><span>portfolio context only</span></div><button class="icon-button" id="closeAssistant" aria-label="Close assistant">&#215;</button></div>
+    <div class="assistant-messages" id="assistantMessages"><div class="assistant-message bot">Ask me about Varashree's projects, skills, research, experience, education, or contact details.</div></div>
+    <form class="assistant-form" id="assistantForm"><input id="assistantInput" aria-label="Ask Varashree AI" placeholder="Ask about the portfolio..." autocomplete="off"><button class="send-button" aria-label="Send question">&#8593;</button></form>
+  </aside>
+
+  <div class="toast" id="toast" role="status"></div>
   <script src="script.js"></script>
 </body>
 </html>
