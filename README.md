@@ -4,7 +4,7 @@ A premium dark-mode developer portfolio shaped like a VS Code workspace. It pres
 
 ## Live Demo
 
-https://portfolio-rg1on4l8p-flamex-01.vercel.app/
+[https://portfolio-jaukg0sc0-flamex-01.vercel.app/]
 
 ## Features
 - Dark IDE-inspired interface with a polished workspace layout
